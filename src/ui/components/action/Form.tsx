@@ -13,12 +13,7 @@ export const ActionEditForm = ({ action }: { action?: Action }) => {
   const router = useRouter();
 
   const { isLoading, mutate: saveAction } = api.action.save.useMutation({
-    onSuccess: async (
-      id: string | undefined,
-      variables: ActionWithoutId,
-      ctx: ((x: unknown) => unknown) | undefined
-    ) => {
-      console.log(id, variables);
+    onSuccess: async (id: string | undefined) => {
       if (id) {
         await router.push(`/action/${id}`);
       }
@@ -85,7 +80,7 @@ export const ActionEditForm = ({ action }: { action?: Action }) => {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Zapisz
           </Button>
         </Form.Item>

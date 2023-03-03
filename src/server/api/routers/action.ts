@@ -25,6 +25,7 @@ export const actionRouter = createTRPCRouter({
             payDate: input.payDate,
             description: input.description,
             image: input.image,
+            user: { connect: { id: ctx.session.user.id } },
           },
         });
         return result.id;
@@ -32,4 +33,24 @@ export const actionRouter = createTRPCRouter({
         console.log(error);
       }
     }),
+
+  get: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(
+      async ({ ctx, input }) =>
+        await ctx.prisma.action.findFirst({
+          where: { id: input.id },
+          include: {
+            products: true,
+            user: true,
+          },
+        })
+    ),
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.action.findMany();
+  }),
 });
