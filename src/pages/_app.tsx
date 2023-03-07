@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import { ConfigProvider, Layout } from "antd";
-import GlobalStyle from "~/styles/globalStyles";
+import GlobalStyle from "~/ui/styles/globalStyles";
 import { Sider } from "~/ui/components/Sider";
 import { Header } from "~/ui/components/Header";
 import { UserMenu } from "~/ui/components/UserMenu";
