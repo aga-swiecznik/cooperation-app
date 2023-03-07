@@ -1,12 +1,6 @@
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { createTRPCRouter } from "~/server/api/trpc";
+import { getDashboardActions } from "~/server/api/controllers/dashboard/dashboard";
 
 export const dashboardRouter = createTRPCRouter({
-  hello: protectedProcedure.query(async ({ ctx }) => {
-    return {
-      userActions: await ctx.prisma.action.findMany(),
-      toCollectActions: await ctx.prisma.action.findMany(),
-      helpingActions: await ctx.prisma.action.findMany(),
-      endingActions: await ctx.prisma.action.findMany(),
-    };
-  }),
+  actions: getDashboardActions,
 });

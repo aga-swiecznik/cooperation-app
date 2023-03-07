@@ -10,7 +10,7 @@ import { api } from "~/utils/api";
 const { Title } = Typography;
 
 export default function Home() {
-  const { data: actions } = api.dashboard.hello.useQuery();
+  const { data: actions } = api.dashboard.actions.useQuery();
 
   if (!actions) return <Skeleton active />;
 

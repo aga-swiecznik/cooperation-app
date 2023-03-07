@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import { PlusOutlined } from "@ant-design/icons";
 import { type Action } from "@prisma/client";
 import { api } from "~/utils/api";
-import { ActionWithoutId, type ActionFormDTO } from "~/dto/ActionDTO";
-import { unknown } from "zod";
+import { type ActionFormDTO } from "~/dto/ActionDTO";
 
 export const ActionEditForm = ({ action }: { action?: Action }) => {
   const [form] = Form.useForm<ActionFormDTO>();
