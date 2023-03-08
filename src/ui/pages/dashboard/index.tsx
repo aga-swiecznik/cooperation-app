@@ -1,9 +1,9 @@
 import { Col, Typography } from "antd";
 import { ContentBox } from "~/ui/components/Content";
-import { MyActions } from "~/ui/components/dashboard/MyActions";
-import { GoodsToCollect } from "~/ui/components/dashboard/GoodsToCollect";
-import { HelpingActions } from "~/ui/components/dashboard/HelpingActions";
-import { EndingActions } from "~/ui/components/dashboard/EndingActions";
+import { MyActions } from "./components/MyActions";
+import { GoodsToCollect } from "./components/GoodsToCollect";
+import { HelpingActions } from "./components/HelpingActions";
+import { EndingActions } from "./components/EndingActions";
 import { GuttedRow } from "~/ui/components/styles";
 import { type Action } from "@prisma/client";
 

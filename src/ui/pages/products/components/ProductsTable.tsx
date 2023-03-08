@@ -1,10 +1,13 @@
-import { Product } from "@/models/Product";
-import { SetProductsProp } from "@/pages/[locale]/action/[id]/products/edit";
+import { type Product } from "@prisma/client";
 import { Table } from "antd";
 import { useProductColumnDefinition } from "./useProductColumnDefinition";
 
 interface ProductsTableProps extends SetProductsProp {
   products: Product[];
+}
+
+export interface SetProductsProp {
+  setProducts: (products: Product[]) => void;
 }
 
 export const ProductsTable = ({

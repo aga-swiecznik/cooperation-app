@@ -1,10 +1,8 @@
-import { http } from "@/lib/http";
 import { Product } from "@/models/Product";
 import { SetProductsProp } from "@/pages/[locale]/action/[id]/products/edit";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Popover, Space, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { Money } from "../Money";
 
@@ -30,23 +28,23 @@ export const useProductColumnDefinition = ({
 
   const columns: ColumnsType<Product> = [
     {
-      title: t("action:product.name"),
+      title: "Nazwa",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: t("action:product.unit"),
+      title: "Jednostka",
       dataIndex: "unit",
       key: "unit",
     },
     {
-      title: t("action:product.price"),
+      title: "Cena",
       dataIndex: "price",
       key: "price",
       render: (value) => <Money value={value} />,
     },
     {
-      title: t("action:product.description"),
+      title: "Opsis",
       dataIndex: "description",
       key: "description",
       render: (value) => {

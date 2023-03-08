@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { ActionDetails } from "~/ui/pages/action/ActionDetails";
+import { ActionEditor } from "~/ui/pages/action/ActionEditor";
 import { api } from "~/utils/api";
 
-export default function ActionPage() {
+export default function ActionDetails() {
   const router = useRouter();
 
   const id = router.query.id?.toString() ?? "";
@@ -13,5 +13,5 @@ export default function ActionPage() {
   // TODO if no action redirect
   if (!action) return null;
 
-  return <ActionDetails action={action} />;
+  return <ActionEditor action={action} />;
 }

@@ -4,7 +4,11 @@ import { useRouter } from "next/router";
 import { PlusOutlined } from "@ant-design/icons";
 import { type Action } from "@prisma/client";
 import { api } from "~/utils/api";
-import { type ActionFormDTO } from "~/dto/ActionDTO";
+import {
+  fromActionFormDTO,
+  toActionFormDTO,
+  type ActionFormDTO,
+} from "~/dto/ActionDTO";
 
 export const ActionEditForm = ({ action }: { action?: Action }) => {
   const [form] = Form.useForm<ActionFormDTO>();
@@ -21,21 +25,18 @@ export const ActionEditForm = ({ action }: { action?: Action }) => {
       console.log("error");
     },
   });
+
   const handleSubmitForm = (values: ActionFormDTO) => {
-    const action = {
-      ...values,
-      startDate: values.startDate.toDate(),
-      orderDate: values.orderDate.toDate(),
-      collectDate: values.collectDate.toDate(),
-      payDate: values.payDate.toDate(),
-      image: null,
-    };
-    saveAction(action);
+    saveAction(fromActionFormDTO(values));
   };
 
   return (
     <>
-      <Form form={form} onFinish={handleSubmitForm} initialValues={action}>
+      <Form
+        form={form}
+        onFinish={handleSubmitForm}
+        initialValues={action ? toActionFormDTO(action) : undefined}
+      >
         <Form.Item label="Nazwa" name="name" rules={[rules.required()]}>
           <Input />
         </Form.Item>
