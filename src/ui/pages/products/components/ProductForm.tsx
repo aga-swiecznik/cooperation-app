@@ -1,10 +1,10 @@
 import { type Product } from "@prisma/client";
 import { Button, Col, Form, Input, InputNumber } from "antd";
 import { useRouter } from "next/router";
-import { ProductFormDTO } from "~/dto/ProductDTO";
+import { type ProductFormDTO } from "~/dto/ProductDTO";
+import { toInteger } from "~/ui/components/Money";
 import { useValidationRules } from "~/ui/hooks/useValidationRules";
 import { api } from "~/utils/api";
-import { toInteger } from "../../../components/Money";
 import { GuttedRow } from "../../../components/styles";
 
 export const ProductForm = ({
@@ -29,7 +29,7 @@ export const ProductForm = ({
   );
   const id = router.query.id?.toString() ?? "";
   const handleSubmitForm = (values: ProductFormDTO) => {
-    saveProduct({ ...values, actionId: id });
+    saveProduct({ ...values, price: toInteger(values.price), actionId: id });
   };
   return (
     <Form form={form} onFinish={handleSubmitForm} layout="vertical">

@@ -18,6 +18,7 @@
     "@trpc/react-query": "^10.14.0",
     "@trpc/server": "^10.14.0",
     "antd": "^5.3.0",
+    "currency.js": "^2.0.4",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "next": "13.2.3",

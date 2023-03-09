@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { protectedProcedure } from "~/server/api/trpc";
+import { getAllProductsFn } from "./allProducts";
 
 export const saveProduct = protectedProcedure
   .input(
@@ -22,7 +23,5 @@ export const saveProduct = protectedProcedure
       },
     });
 
-    return await ctx.prisma.product.findMany({
-      where: { actionId: input.actionId },
-    });
+    return await getAllProductsFn(input.actionId, ctx.prisma);
   });

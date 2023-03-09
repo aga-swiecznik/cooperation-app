@@ -1,5 +1,11 @@
+import { type PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import { protectedProcedure } from "~/server/api/trpc";
+
+export const getAllProductsFn = (actionId: string, prisma: PrismaClient) =>
+  prisma.product.findMany({
+    where: { actionId: actionId },
+  });
 
 export const getAllProducts = protectedProcedure
   .input(
@@ -8,7 +14,5 @@ export const getAllProducts = protectedProcedure
     })
   )
   .query(async ({ ctx, input }) => {
-    return await ctx.prisma.product.findMany({
-      where: { actionId: input.actionId },
-    });
+    return await getAllProductsFn(input.actionId, ctx.prisma);
   });
