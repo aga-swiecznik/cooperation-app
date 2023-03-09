@@ -12,7 +12,7 @@ export const saveProduct = protectedProcedure
     })
   )
   .mutation(async ({ ctx, input }) => {
-    const result = await ctx.prisma.product.create({
+    await ctx.prisma.product.create({
       data: {
         name: input.name,
         unit: input.unit,
@@ -21,5 +21,8 @@ export const saveProduct = protectedProcedure
         action: { connect: { id: input.actionId } },
       },
     });
-    return result.id;
+
+    return await ctx.prisma.product.findMany({
+      where: { actionId: input.actionId },
+    });
   });

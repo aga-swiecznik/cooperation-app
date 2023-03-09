@@ -1,6 +1,7 @@
 import { type Product } from "@prisma/client";
-import { Button, Col, Form, Input } from "antd";
+import { Button, Col, Form, Input, InputNumber } from "antd";
 import { useRouter } from "next/router";
+import { ProductFormDTO } from "~/dto/ProductDTO";
 import { useValidationRules } from "~/ui/hooks/useValidationRules";
 import { api } from "~/utils/api";
 import { toInteger } from "../../../components/Money";
@@ -17,8 +18,8 @@ export const ProductForm = ({
 
   const { isLoading, mutate: saveProduct } = api.action.saveProduct.useMutation(
     {
-      onSuccess: async (id: string | undefined) => {
-        setProducts(res.products);
+      onSuccess: (products: Product[]) => {
+        setProducts(products);
         form.resetFields();
       },
       onError() {
@@ -26,9 +27,9 @@ export const ProductForm = ({
       },
     }
   );
-
+  const id = router.query.id?.toString() ?? "";
   const handleSubmitForm = (values: ProductFormDTO) => {
-    saveProduct(values);
+    saveProduct({ ...values, actionId: id });
   };
   return (
     <Form form={form} onFinish={handleSubmitForm} layout="vertical">
@@ -44,7 +45,7 @@ export const ProductForm = ({
         </Col>
         <Col>
           <Form.Item label="Cena" name="price" rules={[rules.required()]}>
-            <Input type="number" />
+            <InputNumber min={0} />
           </Form.Item>
         </Col>
         <Col>

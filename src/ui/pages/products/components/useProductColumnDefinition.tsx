@@ -1,29 +1,27 @@
-import { Product } from "@/models/Product";
-import { SetProductsProp } from "@/pages/[locale]/action/[id]/products/edit";
 import { DeleteOutlined } from "@ant-design/icons";
+import { type Product } from "@prisma/client";
 import { Button, Popover, Space, Typography } from "antd";
-import { ColumnsType } from "antd/es/table";
-import { useRouter } from "next/router";
-import { Money } from "../Money";
+import { type ColumnsType } from "antd/es/table";
+import { Money } from "~/ui/components/Money";
+import { api } from "~/utils/api";
+import { type SetProductsProp } from "./ProductsTable";
 
 const { Text } = Typography;
 
 export const useProductColumnDefinition = ({
   setProducts,
 }: SetProductsProp) => {
-  const { t } = useTranslation();
-  const router = useRouter();
-
+  const { isLoading, mutate: deleteProduct } =
+    api.action.deleteProduct.useMutation({
+      onSuccess: (products: Product[]) => {
+        setProducts(products);
+      },
+      onError() {
+        console.log("error");
+      },
+    });
   const handleDelete = (id: string) => {
-    const saveData = async () => {
-      const res = await http(
-        "DELETE",
-        `/api/actions/${router.query.id}/products/${id}`
-      );
-
-      setProducts(res.products);
-    };
-    saveData();
+    deleteProduct({ id });
   };
 
   const columns: ColumnsType<Product> = [
@@ -41,13 +39,13 @@ export const useProductColumnDefinition = ({
       title: "Cena",
       dataIndex: "price",
       key: "price",
-      render: (value) => <Money value={value} />,
+      render: (value: number) => <Money value={value} />,
     },
     {
-      title: "Opsis",
+      title: "Opis",
       dataIndex: "description",
       key: "description",
-      render: (value) => {
+      render: (value: string) => {
         return (
           <Popover trigger="click" content={value}>
             <Text style={{ width: 200 }} ellipsis={true}>
@@ -62,7 +60,7 @@ export const useProductColumnDefinition = ({
       key: "action",
       render: (txt, row) => (
         <Space size="middle">
-          <Button onClick={() => handleDelete(row.id)}>
+          <Button onClick={() => handleDelete(row.id)} loading={isLoading}>
             <DeleteOutlined />
           </Button>
         </Space>
