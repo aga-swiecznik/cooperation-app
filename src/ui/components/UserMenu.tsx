@@ -1,4 +1,4 @@
-import { Avatar, Dropdown, MenuProps } from "antd";
+import { Avatar, Dropdown, type MenuProps } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useSession } from "next-auth/react";
 
@@ -19,7 +19,7 @@ export const UserMenu = () => {
   return (
     <Dropdown menu={{ items }}>
       <>
-        {data.user ? `Hello, ${data.user.name} ` : ""}
+        {data.user ? `Hello, ${data.user?.name || ""} ` : ""}
         <Avatar size="large" src={data.user?.image} icon={<UserOutlined />} />
       </>
     </Dropdown>

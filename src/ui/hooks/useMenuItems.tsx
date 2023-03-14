@@ -2,10 +2,11 @@ import { type MenuProps } from "antd";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Role } from "~/enums/Role";
 
 export const useMenuItems = (): MenuProps["items"] => {
-  const { status } = useSession();
-  const { locale } = useRouter();
+  const { status, data } = useSession();
+  const { locale, replace, pathname } = useRouter();
 
   if (status === "loading") {
     return [];
@@ -22,6 +23,13 @@ export const useMenuItems = (): MenuProps["items"] => {
         ),
       },
     ];
+  }
+
+  if (
+    data?.user.role === Role.unauthorized &&
+    !pathname.includes("unauthorized")
+  ) {
+    void replace("/unauthorized");
   }
 
   return [
@@ -46,6 +54,14 @@ export const useMenuItems = (): MenuProps["items"] => {
       label: (
         <Link href="/action/new" locale={locale}>
           Nowa akcja
+        </Link>
+      ),
+    },
+    {
+      key: "user",
+      label: (
+        <Link href="/user" locale={locale}>
+          Użytkownicy
         </Link>
       ),
     },

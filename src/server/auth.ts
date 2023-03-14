@@ -9,6 +9,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
+import { Role } from "~/enums/Role";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -21,14 +22,14 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: Role;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    //   // ...other properties
+    role: Role;
+  }
 }
 
 /**
@@ -41,7 +42,7 @@ export const authOptions: NextAuthOptions = {
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
+        session.user.role = user.role || Role.unauthorized;
       }
       return session;
     },
