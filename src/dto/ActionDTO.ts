@@ -4,12 +4,19 @@ import dayjs, { type Dayjs } from "dayjs";
 export interface ActionFormDTO {
   id?: string;
   name: string;
+  image: string | null;
   startDate: Dayjs;
   orderDate: Dayjs;
   collectDate: Dayjs;
   payDate: Dayjs;
   description: string;
-  image: string | null;
+  rules: string | null;
+  collection: string | null;
+  payment: string | null;
+  paylock: boolean;
+  productsListOpen: boolean;
+  constantPrice: number;
+  discount: number;
 }
 export type ActionWithoutId = Omit<Action, "id">;
 
